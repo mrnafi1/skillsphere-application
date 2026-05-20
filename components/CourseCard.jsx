@@ -16,14 +16,15 @@ const categoryColors = {
 
 export default function CourseCard({ course }) {
   return (
-    <div className="card bg-base-200 border border-base-300 card-glow transition-all duration-300 overflow-hidden group">
+    <article className="card bg-base-200 border border-base-300 card-glow transition-all duration-300 overflow-hidden group hover:border-brand-500/40">
       {/* Image */}
       <div className="relative h-44 overflow-hidden">
         <Image
           src={course.image}
-          alt={course.title}
+          alt={`${course.title} course thumbnail`}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          className="object-cover group-hover:scale-110 transition-transform duration-700"
+          priority={false}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-base-200 via-transparent to-transparent" />
         {/* Category badge */}
@@ -41,10 +42,10 @@ export default function CourseCard({ course }) {
       </div>
 
       <div className="card-body p-4">
-        <h3 className="font-heading font-bold text-white text-base leading-snug line-clamp-2 group-hover:text-brand-500 transition-colors">
+        <h3 className="font-heading font-bold text-white text-base leading-snug line-clamp-2 group-hover:text-brand-500 transition-colors duration-300">
           {course.title}
         </h3>
-        <p className="text-slate-400 text-xs mb-2">by {course.instructor}</p>
+        <p className="text-slate-400 text-xs mb-2 font-medium">by {course.instructor}</p>
 
         {/* Rating & Meta */}
         <div className="flex items-center gap-3 text-xs text-slate-400 mb-3">
@@ -69,12 +70,13 @@ export default function CourseCard({ course }) {
           </span>
           <Link
             href={`/courses/${course.id}`}
-            className="flex items-center gap-1 px-3 py-2 rounded-lg bg-brand-500/10 hover:bg-brand-500 text-brand-500 hover:text-white text-xs font-semibold border border-brand-500/30 hover:border-brand-500 transition-all duration-200"
+            className="flex items-center gap-1 px-3 py-2 rounded-lg bg-brand-500/10 hover:bg-brand-500 text-brand-500 hover:text-white text-xs font-semibold border border-brand-500/30 hover:border-brand-500 transition-all duration-200 hover:shadow-lg hover:shadow-brand-500/20"
+            aria-label={`View details for ${course.title}`}
           >
             View Details <FiArrowRight size={12} />
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
