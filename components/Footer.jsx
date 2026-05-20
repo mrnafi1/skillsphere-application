@@ -114,7 +114,7 @@ export default function Footer() {
                   <div className="w-8 h-8 rounded-lg bg-base-300 group-hover:bg-brand-500/10 flex items-center justify-center transition-colors">
                     <FiPhone size={14} className="text-brand-500" />
                   </div>
-                  +880 1800-000000
+                  +880 1780256748
                 </a>
               </li>
               <li>
