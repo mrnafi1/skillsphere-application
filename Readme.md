@@ -4,8 +4,8 @@ A modern online learning platform where users can explore courses, watch lessons
 
 ## 🔗 Links
 
-- **Live URL:** 
-- **GitHub:**
+- **Live URL:** https://skillsphere-bice.vercel.app/
+- **GitHub:** https://github.com/mrnafi1/skillsphere-application
 
 ## ✨ Key Features
 
@@ -47,23 +47,26 @@ A modern online learning platform where users can explore courses, watch lessons
 
 ## 🚀 Getting Started
 
-### 4. Seed the database
+### Prerequisites
 
-Visit this URL once after starting the server:
+- Node.js 18+ and npm
+- MongoDB Atlas account (or local MongoDB)
+- Google OAuth credentials (optional, for social login)
 
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/mrnafi1/skillsphere-application.git
+cd skillsphere-application
 ```
-http://localhost:3000/api/seed
+
+### 2. Install dependencies
+
+```bash
+npm install
 ```
 
-This seeds 8 courses into MongoDB. Only needs to be done once.
-
-## 🌐 Deployment (Vercel)
-
-1. Push code to GitHub
-2. Import repo on [vercel.com](https://vercel.com)
-3. Add all environment variables (update URLs to your live domain)
-4. Deploy
-5. Visit `https://your-site.vercel.app/api/seed` to seed the live database
+**Live Site:** [https://skillsphere-bice.vercel.app/](https://skillsphere-bice.vercel.app/)
 
 ## 📁 Project Structure
 
