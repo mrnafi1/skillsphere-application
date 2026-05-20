@@ -5,20 +5,21 @@ import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 
 export default function PopularCourses() {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [topRatedCourses, setTopRatedCourses] = useState([]);
+  const [isLoadingCourses, setIsLoadingCourses] = useState(true);
 
   useEffect(() => {
+    // Fetch and display top 3 highest-rated courses
     fetch("/api/courses")
-      .then((r) => r.json())
-      .then((data) => {
-        const sorted = data
-          .sort((a, b) => b.rating - a.rating)
+      .then((response) => response.json())
+      .then((coursesData) => {
+        const sortedByRating = coursesData
+          .sort((firstCourse, secondCourse) => secondCourse.rating - firstCourse.rating)
           .slice(0, 3);
-        setCourses(sorted);
-        setLoading(false);
+        setTopRatedCourses(sortedByRating);
+        setIsLoadingCourses(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => setIsLoadingCourses(false));
   }, []);
 
   return (
@@ -41,10 +42,10 @@ export default function PopularCourses() {
         </Link>
       </div>
 
-      {loading ? (
+      {isLoadingCourses ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="card bg-base-200 border border-base-300 overflow-hidden">
+          {[1, 2, 3].map((skeletonIndex) => (
+            <div key={`skeleton-${skeletonIndex}`} className="card bg-base-200 border border-base-300 overflow-hidden">
               <div className="h-44 shimmer" />
               <div className="p-4 space-y-3">
                 <div className="h-5 shimmer rounded w-3/4" />
@@ -57,8 +58,8 @@ export default function PopularCourses() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {courses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+          {topRatedCourses.map((courseItem) => (
+            <CourseCard key={courseItem.id} course={courseItem} />
           ))}
         </div>
       )}

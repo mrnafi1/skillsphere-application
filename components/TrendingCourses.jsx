@@ -5,21 +5,22 @@ import Link from "next/link";
 import { FiTrendingUp, FiArrowRight } from "react-icons/fi";
 
 export default function TrendingCourses() {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [trendingCoursesList, setTrendingCoursesList] = useState([]);
+  const [isLoadingCourses, setIsLoadingCourses] = useState(true);
 
   useEffect(() => {
+    // Fetch and display top 3 most enrolled courses (trending)
     fetch("/api/courses")
-      .then((r) => r.json())
-      .then((data) => {
-        // Pick courses sorted by students (most enrolled = trending)
-        const trending = data
-          .sort((a, b) => b.students - a.students)
+      .then((response) => response.json())
+      .then((coursesData) => {
+        // Sort by student enrollment count - most enrolled = trending
+        const sortedByEnrollment = coursesData
+          .sort((firstCourse, secondCourse) => secondCourse.students - firstCourse.students)
           .slice(0, 3);
-        setCourses(trending);
-        setLoading(false);
+        setTrendingCoursesList(sortedByEnrollment);
+        setIsLoadingCourses(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => setIsLoadingCourses(false));
   }, []);
 
   return (
@@ -45,10 +46,10 @@ export default function TrendingCourses() {
           </Link>
         </div>
 
-        {loading ? (
+        {isLoadingCourses ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="card bg-base-200 border border-base-300 overflow-hidden">
+            {[1, 2, 3].map((skeletonIndex) => (
+              <div key={`skeleton-${skeletonIndex}`} className="card bg-base-200 border border-base-300 overflow-hidden">
                 <div className="h-44 shimmer" />
                 <div className="p-4 space-y-3">
                   <div className="h-5 shimmer rounded w-3/4" />
@@ -60,8 +61,8 @@ export default function TrendingCourses() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course) => (
-              <CourseCard key={course.id} course={course} />
+            {trendingCoursesList.map((courseItem) => (
+              <CourseCard key={courseItem.id} course={courseItem} />
             ))}
           </div>
         )}
