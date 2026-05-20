@@ -1,47 +1,48 @@
 import { FiClock, FiTarget, FiRepeat, FiBookOpen, FiHeadphones, FiEdit3 } from "react-icons/fi";
 
-const tips = [
+// Science-backed learning strategies for students
+const learningStrategies = [
   {
-    icon: FiClock,
-    title: "Study in Short Bursts",
-    desc: "Use the Pomodoro technique — 25 minutes of focused study, 5-minute break. Your brain retains more with consistent short sessions.",
-    color: "text-orange-400",
-    bg: "bg-orange-500/10 border-orange-500/20",
+    iconComponent: FiClock,
+    tipTitle: "Study in Short Bursts",
+    tipDescription: "Use the Pomodoro technique — 25 minutes of focused study, 5-minute break. Your brain retains more with consistent short sessions.",
+    iconColor: "text-orange-400",
+    cardBackground: "bg-orange-500/10 border-orange-500/20",
   },
   {
-    icon: FiTarget,
-    title: "Set Clear Goals",
-    desc: "Define what you want to achieve before each session. A specific goal like 'finish section 3' beats vague 'study more'.",
-    color: "text-blue-400",
-    bg: "bg-blue-500/10 border-blue-500/20",
+    iconComponent: FiTarget,
+    tipTitle: "Set Clear Goals",
+    tipDescription: "Define what you want to achieve before each session. A specific goal like 'finish section 3' beats vague 'study more'.",
+    iconColor: "text-blue-400",
+    cardBackground: "bg-blue-500/10 border-blue-500/20",
   },
   {
-    icon: FiRepeat,
-    title: "Practice Daily",
-    desc: "Consistency beats intensity. 30 minutes every day produces dramatically better results than 5 hours on weekends.",
-    color: "text-green-400",
-    bg: "bg-green-500/10 border-green-500/20",
+    iconComponent: FiRepeat,
+    tipTitle: "Practice Daily",
+    tipDescription: "Consistency beats intensity. 30 minutes every day produces dramatically better results than 5 hours on weekends.",
+    iconColor: "text-green-400",
+    cardBackground: "bg-green-500/10 border-green-500/20",
   },
   {
-    icon: FiBookOpen,
-    title: "Take Notes Actively",
-    desc: "Don't just watch — pause, summarize in your own words. The act of rewriting information cements it into long-term memory.",
-    color: "text-purple-400",
-    bg: "bg-purple-500/10 border-purple-500/20",
+    iconComponent: FiBookOpen,
+    tipTitle: "Take Notes Actively",
+    tipDescription: "Don't just watch — pause, summarize in your own words. The act of rewriting information cements it into long-term memory.",
+    iconColor: "text-purple-400",
+    cardBackground: "bg-purple-500/10 border-purple-500/20",
   },
   {
-    icon: FiHeadphones,
-    title: "Remove Distractions",
-    desc: "Phone on silent, notifications off. Studies show it takes 23 minutes to regain full focus after a single distraction.",
-    color: "text-yellow-400",
-    bg: "bg-yellow-500/10 border-yellow-500/20",
+    iconComponent: FiHeadphones,
+    tipTitle: "Remove Distractions",
+    tipDescription: "Phone on silent, notifications off. Studies show it takes 23 minutes to regain full focus after a single distraction.",
+    iconColor: "text-yellow-400",
+    cardBackground: "bg-yellow-500/10 border-yellow-500/20",
   },
   {
-    icon: FiEdit3,
-    title: "Teach What You Learn",
-    desc: "Explain concepts out loud or write about them. The Feynman Technique reveals gaps in your understanding instantly.",
-    color: "text-red-400",
-    bg: "bg-red-500/10 border-red-500/20",
+    iconComponent: FiEdit3,
+    tipTitle: "Teach What You Learn",
+    tipDescription: "Explain concepts out loud or write about them. The Feynman Technique reveals gaps in your understanding instantly.",
+    iconColor: "text-red-400",
+    cardBackground: "bg-red-500/10 border-red-500/20",
   },
 ];
 
@@ -60,18 +61,18 @@ export default function LearningTips() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {tips.map((tip) => (
+          {learningStrategies.map((strategy) => (
             <div
-              key={tip.title}
-              className={`border rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20 ${tip.bg}`}
+              key={strategy.tipTitle}
+              className={`border rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20 ${strategy.cardBackground}`}
             >
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${tip.bg} border`}>
-                <tip.icon className={`text-xl ${tip.color}`} />
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${strategy.cardBackground} border`}>
+                <strategy.iconComponent className={`text-xl ${strategy.iconColor}`} />
               </div>
               <h3 className="font-heading font-bold text-white text-lg mb-2">
-                {tip.title}
+                {strategy.tipTitle}
               </h3>
-              <p className="text-slate-400 text-sm leading-relaxed">{tip.desc}</p>
+              <p className="text-slate-400 text-sm leading-relaxed">{strategy.tipDescription}</p>
             </div>
           ))}
         </div>
