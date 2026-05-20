@@ -1,0 +1,242 @@
+import { NextResponse } from "next/server";
+import clientPromise from "@/lib/mongodb";
+
+const courses = [
+  {
+    id: 1,
+    title: "Complete Web Development Bootcamp",
+    instructor: "Sarah Johnson",
+    instructorImage: "https://ui-avatars.com/api/?name=Sarah+Johnson&background=f97316&color=fff",
+    duration: "42 hours",
+    rating: 4.9,
+    students: 18420,
+    level: "Beginner",
+    description:
+      "Master full-stack web development from scratch. Learn HTML, CSS, JavaScript, React, Node.js, and MongoDB. Build real-world projects and land your first developer job.",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80",
+    category: "Development",
+    price: 49.99,
+    curriculum: [
+      "HTML5 & CSS3 Fundamentals",
+      "JavaScript ES6+ Deep Dive",
+      "Responsive Design with Flexbox & Grid",
+      "React.js & Component Architecture",
+      "Node.js & Express Backend",
+      "MongoDB & Database Design",
+      "REST API Development",
+      "Authentication & Authorization",
+      "Deployment on Vercel & Heroku",
+      "Final Capstone Project",
+    ],
+  },
+  {
+    id: 2,
+    title: "UI/UX Design Masterclass",
+    instructor: "Alex Chen",
+    instructorImage: "https://ui-avatars.com/api/?name=Alex+Chen&background=8b5cf6&color=fff",
+    duration: "28 hours",
+    rating: 4.8,
+    students: 11250,
+    level: "Intermediate",
+    description:
+      "Learn professional UI/UX design with Figma. Cover user research, wireframing, prototyping, and design systems. Build a portfolio of stunning interfaces.",
+    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80",
+    category: "Design",
+    price: 39.99,
+    curriculum: [
+      "Design Thinking Process",
+      "User Research & Personas",
+      "Information Architecture",
+      "Wireframing & Lo-Fi Prototypes",
+      "Figma Essentials",
+      "Color Theory & Typography",
+      "Component Libraries",
+      "Hi-Fi Prototyping",
+      "Usability Testing",
+      "Portfolio Building",
+    ],
+  },
+  {
+    id: 3,
+    title: "Digital Marketing Strategy",
+    instructor: "Maya Patel",
+    instructorImage: "https://ui-avatars.com/api/?name=Maya+Patel&background=0ea5e9&color=fff",
+    duration: "20 hours",
+    rating: 4.7,
+    students: 9870,
+    level: "Beginner",
+    description:
+      "Master digital marketing from SEO to social media, email marketing, paid ads, and analytics. Build campaigns that drive real business results.",
+    image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=600&q=80",
+    category: "Marketing",
+    price: 34.99,
+    curriculum: [
+      "Digital Marketing Fundamentals",
+      "Search Engine Optimization (SEO)",
+      "Google Ads & PPC Campaigns",
+      "Social Media Marketing",
+      "Email Marketing Automation",
+      "Content Marketing Strategy",
+      "Analytics & Data-Driven Decisions",
+      "Conversion Rate Optimization",
+      "Influencer Marketing",
+      "Campaign Management",
+    ],
+  },
+  {
+    id: 4,
+    title: "Python for Data Science",
+    instructor: "Dr. James Wright",
+    instructorImage: "https://ui-avatars.com/api/?name=James+Wright&background=22c55e&color=fff",
+    duration: "35 hours",
+    rating: 4.9,
+    students: 22100,
+    level: "Intermediate",
+    description:
+      "Learn Python programming, data analysis with Pandas, visualization with Matplotlib, machine learning with Scikit-learn, and deep learning basics.",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80",
+    category: "Development",
+    price: 54.99,
+    curriculum: [
+      "Python Fundamentals",
+      "Data Structures & Algorithms",
+      "NumPy for Numerical Computing",
+      "Pandas Data Analysis",
+      "Data Visualization with Matplotlib",
+      "Statistical Analysis",
+      "Machine Learning Basics",
+      "Scikit-learn in Practice",
+      "Neural Networks Introduction",
+      "Capstone Data Project",
+    ],
+  },
+  {
+    id: 5,
+    title: "Mobile App Development with React Native",
+    instructor: "Carlos Rivera",
+    instructorImage: "https://ui-avatars.com/api/?name=Carlos+Rivera&background=ef4444&color=fff",
+    duration: "30 hours",
+    rating: 4.6,
+    students: 7650,
+    level: "Intermediate",
+    description:
+      "Build cross-platform iOS and Android apps with React Native. Learn navigation, state management, animations, and publishing to app stores.",
+    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80",
+    category: "Development",
+    price: 44.99,
+    curriculum: [
+      "React Native Setup & Expo",
+      "Core Components & Styling",
+      "Navigation with React Navigation",
+      "State Management with Redux",
+      "Working with APIs",
+      "Camera & Media Integration",
+      "Push Notifications",
+      "Animations & Gestures",
+      "App Store Deployment",
+      "Performance Optimization",
+    ],
+  },
+  {
+    id: 6,
+    title: "Graphic Design for Beginners",
+    instructor: "Lisa Thompson",
+    instructorImage: "https://ui-avatars.com/api/?name=Lisa+Thompson&background=eab308&color=fff",
+    duration: "18 hours",
+    rating: 4.7,
+    students: 13400,
+    level: "Beginner",
+    description:
+      "Learn graphic design principles, Adobe Photoshop, Illustrator, and InDesign. Create logos, posters, brand identities, and social media graphics.",
+    image: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&q=80",
+    category: "Design",
+    price: 29.99,
+    curriculum: [
+      "Design Principles & Elements",
+      "Color Psychology",
+      "Typography Mastery",
+      "Adobe Photoshop Essentials",
+      "Adobe Illustrator Basics",
+      "Logo Design Process",
+      "Brand Identity Creation",
+      "Social Media Graphics",
+      "Print Design & Layout",
+      "Building Your Design Portfolio",
+    ],
+  },
+  {
+    id: 7,
+    title: "Advanced JavaScript & TypeScript",
+    instructor: "Tom Harrison",
+    instructorImage: "https://ui-avatars.com/api/?name=Tom+Harrison&background=f97316&color=fff",
+    duration: "25 hours",
+    rating: 4.8,
+    students: 8920,
+    level: "Advanced",
+    description:
+      "Deep dive into advanced JavaScript patterns, TypeScript, async programming, testing, and modern tooling. Write production-quality code like a senior engineer.",
+    image: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=600&q=80",
+    category: "Development",
+    price: 49.99,
+    curriculum: [
+      "Advanced JS Patterns & Closures",
+      "Prototypal Inheritance",
+      "Asynchronous JavaScript",
+      "TypeScript Fundamentals",
+      "Generics & Advanced Types",
+      "Testing with Jest",
+      "Module Bundlers (Webpack, Vite)",
+      "Performance Optimization",
+      "Clean Code Principles",
+      "Open Source Contribution",
+    ],
+  },
+  {
+    id: 8,
+    title: "Content Creation & Social Media Growth",
+    instructor: "Priya Sharma",
+    instructorImage: "https://ui-avatars.com/api/?name=Priya+Sharma&background=0ea5e9&color=fff",
+    duration: "15 hours",
+    rating: 4.5,
+    students: 16700,
+    level: "Beginner",
+    description:
+      "Grow your social media presence from zero to thousands. Learn content strategy, video editing, copywriting, community building, and monetization.",
+    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&q=80",
+    category: "Marketing",
+    price: 24.99,
+    curriculum: [
+      "Content Strategy Fundamentals",
+      "Identifying Your Niche",
+      "Short-Form Video Creation",
+      "Instagram & TikTok Growth",
+      "YouTube Channel Building",
+      "Copywriting for Social Media",
+      "Community Engagement",
+      "Analytics & Growth Tracking",
+      "Brand Partnerships",
+      "Monetization Strategies",
+    ],
+  },
+];
+
+export async function GET() {
+  try {
+    const client = await clientPromise;
+    const db = client.db("skillsphere");
+    const collection = db.collection("courses");
+
+    await collection.deleteMany({});
+    await collection.insertMany(courses);
+
+    return NextResponse.json({
+      message: `✅ Successfully seeded ${courses.length} courses into the database!`,
+      count: courses.length,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to seed database", details: error.message },
+      { status: 500 }
+    );
+  }
+}
